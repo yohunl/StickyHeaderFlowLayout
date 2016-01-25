@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  YLStickyHeaderFlowLayout.h
 //  StickyHeaderFlowLayout
 //
 //  Created by lingyohunl on 16/1/25.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UICollectionViewController
-
-
+@interface YLStickyHeaderFlowLayout : UICollectionViewFlowLayout
+@property (nonatomic,assign)BOOL disableStickyFlow;
 @end
-
