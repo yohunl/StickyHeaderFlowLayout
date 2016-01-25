@@ -52,7 +52,17 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCellID" forIndexPath:indexPath];
-    cell.imgView.backgroundColor = indexPath.section%2?[UIColor redColor]:[UIColor cyanColor];
+    NSInteger temp = indexPath.section%3;
+    if (temp == 0) {
+        cell.imgView.backgroundColor = [UIColor yellowColor];
+    }
+    else if (temp == 1) {
+        cell.imgView.backgroundColor = [UIColor blueColor];
+    }
+    else if (temp == 2) {
+        cell.imgView.backgroundColor = [UIColor greenColor];
+    }
+    cell.imgTitleLabel.textColor = [UIColor blackColor];
     cell.imgTitleLabel.text = [NSString stringWithFormat:@"%ld,%ld",(long)indexPath.section,(long)indexPath.row];
     return cell;
 }
@@ -65,29 +75,23 @@
         footer.textLabel.text = [NSString stringWithFormat:@"第%ld个分区的footer",indexPath.section];
         return footer;
     }
-    
-    if (indexPath.section >0) {
-        SectionHeaderReusableView *header = [collectionView  dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeadIdentifier" forIndexPath:indexPath];
-        header.backgroundColor = indexPath.section%2?[[UIColor blackColor] colorWithAlphaComponent:0.5] : [[UIColor blueColor] colorWithAlphaComponent:0.5];
-        header.textLabel.text = [NSString stringWithFormat:@"第%ld个分区的header",indexPath.section];
-        return header;
+    else if (kind==UICollectionElementKindSectionHeader) {
+        SectionHeaderReusableView *footer = [collectionView  dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"HeadIdentifier" forIndexPath:indexPath];
+        footer.backgroundColor = [UIColor colorWithRed:0.7127 green:0.1776 blue:0.7478 alpha:1.0];
+        footer.textLabel.text = [NSString stringWithFormat:@"第%ld个分区的header",indexPath.section];
+        return footer;
     }
+    
     return nil;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    if (section>0) {
-        return CGSizeMake(0, 44);
-    }
-    return CGSizeZero;
+    return CGSizeMake(0, 44);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    if (section==3) {
-        return CGSizeZero;
-    }
     return CGSizeMake(0, 20);
 }
 
