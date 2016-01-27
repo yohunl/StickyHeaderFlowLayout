@@ -25,6 +25,8 @@
     [self.collectionView registerClass:[SectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader  withReuseIdentifier:@"HeadIdentifier"];
     [self.collectionView registerClass:[SectionHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter  withReuseIdentifier:@"FootIdentifier"];
     
+    
+    
 }
 - (void)reloadLayout {
     YLStickyHeaderFlowLayout *layout = (id)self.collectionViewLayout;
@@ -36,6 +38,8 @@
         //layout.minimumLineSpacing = 5;
         //layout.minimumInteritemSpacing = 5;
         layout.disableStickyFlow = NO;
+        
+        layout.stickySections = @[@2,@3];
     }
 }
 

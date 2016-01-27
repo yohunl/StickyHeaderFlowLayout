@@ -9,7 +9,12 @@
 #import "YLStickyHeaderFlowLayout.h"
 
 @implementation YLStickyHeaderFlowLayout
+#pragma mark - 设置方法
 
+- (void)setStickySections:(NSArray<NSNumber *> *)stickySections {
+    _stickySections = stickySections;
+    _disableStickyFlow = (_stickySections.count > 0)?NO:YES;
+}
 #pragma mark - 重载方法
 - (BOOL) shouldInvalidateLayoutForBoundsChange:(CGRect)newBound
 {
@@ -103,11 +108,20 @@
                                                           atIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.section]];
             
             if (!CGSizeEqualToSize(CGSizeZero, header.frame.size)) {
-                [allItems addObject:header];
+                if ([self haveSection:indexPath.section]) {
+                    [allItems addObject:header];
+                }
+                
+                
             }
         }
         if (!CGSizeEqualToSize(CGSizeZero, header.frame.size)) {
-            [self updateHeaderAttributes:header lastCellAttributes:lastCells[indexPathKey]];
+            
+            if ([self haveSection:indexPath.section]) {
+                [self updateHeaderAttributes:header lastCellAttributes:lastCells[indexPathKey]];
+            }
+            
+            
         }
     }];
     
@@ -140,4 +154,22 @@
     };
 }
 
+
+
+- (BOOL)haveSection:(NSInteger )section {
+    __block BOOL flag = NO;
+    if (_stickySections.count == 0) {//为空表示所有的header都是要悬停的
+        flag = YES;
+    }
+    else {
+        [_stickySections enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.integerValue == section) {
+                flag = YES;
+                *stop = YES;
+            }
+        }];
+    }
+    
+    return flag;
+}
 @end
