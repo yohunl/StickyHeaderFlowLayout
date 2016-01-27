@@ -1,7 +1,12 @@
 StickyHeaderFlowLayout
 ==============
 
-实现UICollectionView的section header悬停效果.效果和UITableView的plain模式下的header section效果相同<br /><br />
+实现UICollectionView的section header悬停效果.效果和UITableView的plain模式下的header section效果相同,支持指定某一个或者多个sction header的悬停<br /><br />
+关键在于设置下面的这个属性
+```objective-c
+@property (nonatomic,strong) NSArray<NSNumber *> *stickySections;
+```
+
 ![image](./show.gif)<br /><br />
 
 
@@ -83,6 +88,7 @@ YLStickyHeaderFlowLayout核心源码
     return allItems;
     
 }
+```
 
 
 
